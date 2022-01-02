@@ -1,4 +1,9 @@
-import { getAuth, createUserWithEmailAndPassword,setPersistence, inMemoryPersistence } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  setPersistence,
+  inMemoryPersistence,
+} from "firebase/auth";
 import { useState } from "react";
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -6,7 +11,7 @@ const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const auth = getAuth();
-    setPersistence(auth, inMemoryPersistence)
+    setPersistence(auth, inMemoryPersistence);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
@@ -25,7 +30,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <h1>ユーザ登録</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>メールアドレス</label>

@@ -1,20 +1,25 @@
-import { getAuth, signInWithEmailAndPassword,setPersistence, inMemoryPersistence } from 'firebase/auth'
-import { useState } from 'react';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  setPersistence,
+  inMemoryPersistence,
+} from "firebase/auth";
+import { useState } from "react";
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     const auth = getAuth();
-    setPersistence(auth, inMemoryPersistence)
-    signInWithEmailAndPassword (auth, email, password)
+    setPersistence(auth, inMemoryPersistence);
+    signInWithEmailAndPassword(auth, email, password)
       .then((user) => {
         console.log(user);
       })
-      .catch((error) =>{
+      .catch((error) => {
         console.error(error.message);
         console.error(error);
-      })
+      });
   };
   const handleChangeEmail = (event) => {
     setEmail(event.currentTarget.value);
