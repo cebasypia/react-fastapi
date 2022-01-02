@@ -1,6 +1,7 @@
 import React from "react";
 import { getAuth, EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import SignIn from "./SignIn"
 
 const uiConfig = {
   signInFlow: "popup",
@@ -14,7 +15,7 @@ const uiConfig = {
 const SignInScreen = () => {
   return (
     <div>
-      <h1>Sign In</h1>
+      <SignIn />
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={getAuth()} />
     </div>
   );
