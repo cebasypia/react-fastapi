@@ -1,20 +1,20 @@
-import { getAuth, createUserWithEmailAndPassword,setPersistence, inMemoryPersistence } from 'firebase/auth'
-import { useState } from "react";
-const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { getAuth, signInWithEmailAndPassword,setPersistence, inMemoryPersistence } from 'firebase/auth'
+import { useState } from 'react';
+const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
     const auth = getAuth();
     setPersistence(auth, inMemoryPersistence)
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
+    signInWithEmailAndPassword (auth, email, password)
+      .then((user) => {
+        console.log(user);
       })
-      .catch((error) => {
-        alert(error.message);
+      .catch((error) =>{
+        console.error(error.message);
         console.error(error);
-      });
+      })
   };
   const handleChangeEmail = (event) => {
     setEmail(event.currentTarget.value);
@@ -25,7 +25,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <h1>ユーザ登録</h1>
+      <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>メールアドレス</label>
@@ -46,11 +46,11 @@ const SignUp = () => {
           />
         </div>
         <div>
-          <button>登録</button>
+          <button>Sign In</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default SignUp;
+export default SignIn;
