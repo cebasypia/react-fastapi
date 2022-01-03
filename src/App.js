@@ -1,7 +1,7 @@
 import AppProvider from "./providers/AppProvider"
 import Router from "./routers/router"
 
-function App() {
+const App = () => {
   return (
     <AppProvider>
       <Router />

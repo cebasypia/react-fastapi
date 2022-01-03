@@ -4,7 +4,7 @@ import Auth from "../pages/auth";
 import Users from "./users";
 import UserStatus from "../components/UserStatus";
 
-export default function Router() {
+const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<UserStatus />}>
@@ -18,4 +18,6 @@ export default function Router() {
       </Route>
     </Routes>
   );
-}
+};
+
+export default Router;

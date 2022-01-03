@@ -4,7 +4,7 @@ import SignOut from "../components/SignOut";
 import CheckAuthStatus from "../components/CheckAuthStatus";
 import SignInScreen from "../components/SignInScreen";
 
-function Auth() {
+const Auth = () => {
   return (
     <div style={{ margin: "2em" }}>
       <SignUp />
