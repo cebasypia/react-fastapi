@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAuth, onAuthStateChanged, getIdToken } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  getIdToken,
+  updateProfile,
+} from "firebase/auth";
 
 const UserProfile = () => {
   const [user, setUser] = useState({});
+  const [newUserName, setNewUserName] = useState("");
   const { id } = useParams();
   const APP_URL = `http://localhost:8000/users/${id}`;
   const auth = getAuth();
@@ -34,6 +40,22 @@ const UserProfile = () => {
     });
   }, [APP_URL, auth]);
 
+  const onClick = () => {
+    updateProfile(auth.currentUser, {
+      displayName: newUserName,
+    })
+      .then(() => {
+        console.log("Profile updated!");
+      })
+      .catch((error) => {
+        console.log("An error occurred", error);
+      });
+  };
+
+  const handleOnChange = (e) => {
+    setNewUserName(e.target.value);
+  };
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(-1, { replace: true });
@@ -45,7 +67,23 @@ const UserProfile = () => {
       <li>
         <button onClick={handleClick}>UserIndex</button>
       </li>
-      {user && <ol key={user.id}>{user.name}</ol>}
+      {user && (
+        <div key={user.id}>
+          <ol>{user.id}</ol>
+          <ol>{user.name}</ol>
+          {user.id === auth.currentUser.uid && (
+            <div>
+              <input
+                value={newUserName}
+                name="name"
+                type="text"
+                onChange={handleOnChange}
+              ></input>
+              <button onClick={onClick}>更新</button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
