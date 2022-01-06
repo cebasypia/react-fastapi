@@ -6,39 +6,13 @@ import {
   getIdToken,
   updateProfile,
 } from "firebase/auth";
+import { useGetUser } from "../../hooks/useGetUser";
 
 const UserProfile = () => {
-  const [user, setUser] = useState({});
-  const [newUserName, setNewUserName] = useState("");
   const { id } = useParams();
-  const APP_URL = `http://localhost:8000/users/${id}`;
+  const [user, isLoading] = useGetUser(id);
+  const [newUserName, setNewUserName] = useState("");
   const auth = getAuth();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        getIdToken(user).then((idToken) => {
-          fetch(APP_URL, {
-            method: "GET",
-            headers: new Headers({
-              Authorization: `Bearer ${idToken}`,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setUser(data);
-            });
-        });
-        // ...
-      } else {
-        // User is signed out
-        // ...
-        console.log("User is not Authenticated");
-      }
-    });
-  }, [APP_URL, auth]);
 
   const onClick = () => {
     updateProfile(auth.currentUser, {
@@ -67,22 +41,26 @@ const UserProfile = () => {
       <li>
         <button onClick={handleClick}>UserIndex</button>
       </li>
-      {user && (
-        <div key={user.id}>
-          <ol>{user.id}</ol>
-          <ol>{user.name}</ol>
-          {user.id === auth.currentUser.uid && (
-            <div>
-              <input
-                value={newUserName}
-                name="name"
-                type="text"
-                onChange={handleOnChange}
-              ></input>
-              <button onClick={onClick}>更新</button>
-            </div>
-          )}
-        </div>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        user && (
+          <div key={user.id}>
+            <ol>{user.id}</ol>
+            <ol>{user.name}</ol>
+            {user.id === auth.currentUser.uid && (
+              <div>
+                <input
+                  value={newUserName}
+                  name="name"
+                  type="text"
+                  onChange={handleOnChange}
+                ></input>
+                <button onClick={onClick}>更新</button>
+              </div>
+            )}
+          </div>
+        )
       )}
     </div>
   );
