@@ -6,7 +6,7 @@ import {
   getIdToken,
   updateProfile,
 } from "firebase/auth";
-import { useGetUser } from "../../hooks/useGetUser";
+import { useGetUser } from "../../hooks/useUser";
 
 const UserProfile = () => {
   const { id } = useParams();
