@@ -42,7 +42,7 @@ const UserProfile = () => {
           <div key={user.id}>
             <ol>{user.id}</ol>
             <ol>{user.name}</ol>
-            {user.id === auth.currentUser.uid && (
+            {user.id !== auth?.currentUser?.uid && (
               <div>
                 <input
                   ref={displayNameEl}
