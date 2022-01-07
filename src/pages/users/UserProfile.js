@@ -2,8 +2,6 @@ import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getAuth,
-  onAuthStateChanged,
-  getIdToken,
   updateProfile,
 } from "firebase/auth";
 import { useGetUser } from "../../hooks/useUser";
@@ -24,10 +22,6 @@ const UserProfile = () => {
       .catch((error) => {
         console.log("An error occurred", error);
       });
-  };
-
-  const handleOnChange = (e) => {
-    setNewUserName(e.target.value);
   };
 
   const navigate = useNavigate();
@@ -53,7 +47,6 @@ const UserProfile = () => {
                 <input
                   ref={displayNameEl}
                   type="text"
-                  onChange={handleOnChange}
                 ></input>
                 <button onClick={onClick}>更新</button>
               </div>
