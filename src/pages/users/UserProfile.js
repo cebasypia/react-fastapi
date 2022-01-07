@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getAuth,
@@ -11,12 +11,12 @@ import { useGetUser } from "../../hooks/useUser";
 const UserProfile = () => {
   const { id } = useParams();
   const [user, isLoading] = useGetUser(id);
-  const [newUserName, setNewUserName] = useState("");
+  const displayNameEl = useRef(null);
   const auth = getAuth();
 
   const onClick = () => {
     updateProfile(auth.currentUser, {
-      displayName: newUserName,
+      displayName: displayNameEl.current.value,
     })
       .then(() => {
         console.log("Profile updated!");
@@ -31,7 +31,7 @@ const UserProfile = () => {
   };
 
   const navigate = useNavigate();
-  const handleClick = () => {
+  const backward = () => {
     navigate(-1, { replace: true });
   };
 
@@ -39,7 +39,7 @@ const UserProfile = () => {
     <div>
       <h1>UserProfile</h1>
       <li>
-        <button onClick={handleClick}>UserIndex</button>
+        <button onClick={backward}>UserIndex</button>
       </li>
       {isLoading ? (
         <div>Loading</div>
@@ -51,8 +51,7 @@ const UserProfile = () => {
             {user.id === auth.currentUser.uid && (
               <div>
                 <input
-                  value={newUserName}
-                  name="name"
+                  ref={displayNameEl}
                   type="text"
                   onChange={handleOnChange}
                 ></input>
